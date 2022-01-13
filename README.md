@@ -4,7 +4,7 @@
 添加后, 你可以在qq里直接向wolframalpha发出查询请求
 
 ### 使用方法
-* 将[release](https://github.com/whiterasbk/wolframalpha4mirai/releases/tag/release)的jar文件下载并放入mirai运行目录下的plugins\文件夹
+* 将[release](https://github.com/whiterasbk/wolframalpha4mirai/releases/tag/release)下的`wolframalpha4mirai.jar`文件下载并放入mirai运行目录下的plugins\文件夹
 * 前往[此处](https://developer.wolframalpha.com/portal/myapps/index.html)按照提示获取一个**appid**
 * 启动一次mirai并关闭, 或者你也可以在`config\`下新建`whiter.bot.wolframalpha\config.yml`文件
 * 按照如下方式编辑`config.yml`
