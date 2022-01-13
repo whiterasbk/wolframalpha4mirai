@@ -1,0 +1,46 @@
+
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.4.30'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.30'
+
+    id 'net.mamoe.mirai-console' version '2.9.2'
+//    id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+}
+
+group = 'whiter.bot'
+version = '1.0-SNAPSHOT'
+
+// copy .\build\libs\wolframalpha-1.0-SNAPSHOT.jar D:\whiter\pinelliaternata\plugins\
+task cpjar {
+    group('build')
+    dependsOn jar
+    doLast {
+        copy {
+            from '.\\build\\libs\\wolframalpha-1.0-SNAPSHOT.jar' into 'D:\\whiter\\pinelliaternata\\plugins\\'
+        }
+        // println "D:\\whiter\\pinelliaternata\\mcl.cmd".execute()
+    }
+}
+
+repositories {
+    maven { url 'https://maven.aliyun.com/repository/public' }
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation group: 'org.json', name: 'json', version: '20210307'
+    implementation 'org.projectlombok:lombok:1.18.16'
+    // implementation 'org.projectlombok:lombok:1.18.16'
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}

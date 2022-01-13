@@ -1,0 +1,394 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<queryresult success='true'
+             error='false'
+             xml:space='preserve'
+             numpods='9'
+             datatypes='D'
+             timedout='FunctionProperties,GlobalExtrema,InterestingDefiniteIntegrals,InterestingMultiDimensionalDefiniteIntegrals'
+             timedoutpods=''
+             timing='7.95'
+             parsetiming='0.083'
+             parsetimedout='false'
+             recalculate='https://www6b3.wolframalpha.com/api/v1/recalc.jsp?id=MSPa328513200a5e009e699100003gf642fa852b1h493172133347439184749'
+             id='MSP328613200a5e009e6991000044h7bf8ib0bi100e'
+             host='https://www6b3.wolframalpha.com'
+             server='8'
+             related='https://www6b3.wolframalpha.com/api/v1/relatedQueries.jsp?id=MSPa328713200a5e009e6991000020if40he03i7i42h3172133347439184749'
+             version='2.6'
+             inputstring='dx{tanx}'>
+ <pod title='Derivative'
+      scanner='Derivative'
+      id='Input'
+      position='100'
+      error='false'
+      numsubpods='1'
+      primary='true'>
+  <subpod title=''>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP328813200a5e009e699100005cd00b367bcede33?MSPStoreType=image/gif&amp;s=8'
+        alt='d/dx(tan(x)) = sec^2(x)'
+        title='d/dx(tan(x)) = sec^2(x)'
+        width='140'
+        height='39'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+      <plaintext>d/dx(tan(x)) = sec^2(x)</plaintext>
+  </subpod>
+     <expressiontypes count='1'>
+   <expressiontype name='Default' />
+  </expressiontypes>
+     <states count='1'>
+   <state name='Step-by-step solution'
+          input='Input__Step-by-step solution'
+          stepbystep='true' />
+  </states>
+     <infos count='1'>
+   <info text='sec(x) is the secant function'>
+    <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP328913200a5e009e6991000044h633e14c8e81i1?MSPStoreType=image/gif&amp;s=8'
+         alt='sec(x) is the secant function'
+         title='sec(x) is the secant function'
+         width='183'
+         height='19' />
+       <link url='http://reference.wolfram.com/language/ref/Sec.html'
+             text='Documentation'
+             title='Mathematica' />
+       <link url='http://functions.wolfram.com/ElementaryFunctions/Sec'
+             text='Properties'
+             title='Wolfram Functions Site' />
+       <link url='http://mathworld.wolfram.com/Secant.html'
+             text='Definition'
+             title='MathWorld' />
+   </info>
+  </infos>
+ </pod>
+    <pod title='Plots'
+         scanner='Plotter'
+         id='Plot'
+         position='200'
+         error='false'
+         numsubpods='2'>
+  <subpod title=''>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP329013200a5e009e6991000034f6e280d3gch190?MSPStoreType=image/gif&amp;s=8'
+        alt='Plots'
+        title=''
+        width='337'
+        height='150'
+        type='2DMathPlot_1'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+      <plaintext></plaintext>
+  </subpod>
+        <subpod title=''>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP329113200a5e009e699100004a687g5hf39ea393?MSPStoreType=image/gif&amp;s=8'
+        alt='Plots'
+        title=''
+        width='351'
+        height='154'
+        type='2DMathPlot_1'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+            <plaintext></plaintext>
+  </subpod>
+        <expressiontypes count='2'>
+   <expressiontype name='Default' />
+            <expressiontype name='Default' />
+  </expressiontypes>
+ </pod>
+    <pod title='Alternate forms'
+         scanner='Simplification'
+         id='AlternateForm'
+         position='300'
+         error='false'
+         numsubpods='3'>
+  <subpod title=''>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP329213200a5e009e699100000ifhae81305a0gd7?MSPStoreType=image/gif&amp;s=8'
+        alt='1/(cos^2(x))'
+        title='1/(cos^2(x))'
+        width='52'
+        height='42'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+      <plaintext>1/(cos^2(x))</plaintext>
+  </subpod>
+        <subpod title=''>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP329313200a5e009e6991000034g3fbig7h7ec6ee?MSPStoreType=image/gif&amp;s=8'
+        alt='2/(cos(2 x) + 1)'
+        title='2/(cos(2 x) + 1)'
+        width='80'
+        height='40'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+            <plaintext>2/(cos(2 x) + 1)</plaintext>
+  </subpod>
+        <subpod title=''>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP329413200a5e009e699100002bbfe64iief241g6?MSPStoreType=image/gif&amp;s=8'
+        alt='4/(e^(-i x) + e^(i x))^2'
+        title='4/(e^(-i x) + e^(i x))^2'
+        width='87'
+        height='45'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+            <plaintext>4/(e^(-i x) + e^(i x))^2</plaintext>
+  </subpod>
+        <expressiontypes count='3'>
+   <expressiontype name='Default' />
+            <expressiontype name='Default' />
+            <expressiontype name='Default' />
+  </expressiontypes>
+ </pod>
+    <pod title='Alternate form assuming x is real'
+         scanner='Simplification'
+         id='AlternateFormAssumingAllVariablesAreReal'
+         position='400'
+         error='false'
+         numsubpods='1'>
+  <subpod title=''>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP329513200a5e009e6991000019917abge3ig3888?MSPStoreType=image/gif&amp;s=8'
+        alt='(4 cos^2(x))/(cos(2 x) + 1)^2'
+        title='(4 cos^2(x))/(cos(2 x) + 1)^2'
+        width='97'
+        height='47'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+      <plaintext>(4 cos^2(x))/(cos(2 x) + 1)^2</plaintext>
+  </subpod>
+        <expressiontypes count='1'>
+   <expressiontype name='Default' />
+  </expressiontypes>
+ </pod>
+    <pod title='Roots'
+         scanner='Reduce'
+         id='NoSolutionsFromReduce'
+         position='500'
+         error='false'
+         numsubpods='1'
+         primary='true'>
+  <subpod title=''>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP329613200a5e009e699100001i317a49hi2gab99?MSPStoreType=image/gif&amp;s=8'
+        alt='(no roots exist)'
+        title='(no roots exist)'
+        width='98'
+        height='19'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+      <plaintext>(no roots exist)</plaintext>
+  </subpod>
+        <expressiontypes count='1'>
+   <expressiontype name='Default' />
+  </expressiontypes>
+        <states count='1'>
+   <state name='Step-by-step solution'
+          input='NoSolutionsFromReduce__Step-by-step solution'
+          stepbystep='true' />
+  </states>
+ </pod>
+    <pod title='Properties as a real function'
+         scanner='FunctionProperties'
+         id='PropertiesAsARealFunction'
+         position='600'
+         error='false'
+         numsubpods='4'>
+  <subpod title='Domain'>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP329713200a5e009e699100005gge8hhc9a1b9997?MSPStoreType=image/gif&amp;s=8'
+        alt='{x element R : x/π + 1/2 not element Z}'
+        title='{x element R : x/π + 1/2 not element Z}'
+        width='132'
+        height='37'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+      <plaintext>{x element R : x/π + 1/2 not element Z}</plaintext>
+  </subpod>
+        <subpod title='Range'>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP329813200a5e009e699100001d93fdia2cbg9b1h?MSPStoreType=image/gif&amp;s=8'
+        alt='{y element R : y&gt;=1}'
+        title='{y element R : y&gt;=1}'
+        width='98'
+        height='19'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+            <plaintext>{y element R : y&gt;=1}</plaintext>
+  </subpod>
+        <subpod title='Periodicity'>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP329913200a5e009e6991000035e3832ifc4g5ce0?MSPStoreType=image/gif&amp;s=8'
+        alt='periodic in x with period π'
+        title='periodic in x with period π'
+        width='174'
+        height='19'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+            <plaintext>periodic in x with period π</plaintext>
+  </subpod>
+        <subpod title='Parity'>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP330013200a5e009e6991000016355gbh8cfgfgea?MSPStoreType=image/gif&amp;s=8'
+        alt='even'
+        title='even'
+        width='30'
+        height='19'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+            <plaintext>even</plaintext>
+  </subpod>
+        <expressiontypes count='4'>
+   <expressiontype name='Default' />
+            <expressiontype name='Default' />
+            <expressiontype name='Default' />
+            <expressiontype name='Default' />
+  </expressiontypes>
+        <states count='1'>
+   <state name='Approximate forms'
+          input='PropertiesAsARealFunction__Approximate forms' />
+  </states>
+        <infos count='2'>
+   <info text='R is the set of real numbers'>
+    <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP330113200a5e009e69910000125580bg8af1ihi1?MSPStoreType=image/gif&amp;s=8'
+         alt='R is the set of real numbers'
+         title='R is the set of real numbers'
+         width='180'
+         height='19' />
+       <link url='http://reference.wolfram.com/language/ref/Reals.html'
+             text='Documentation'
+             title='Documentation' />
+       <link url='http://mathworld.wolfram.com/R.html'
+             text='Definition'
+             title='MathWorld' />
+   </info>
+            <info text='Z is the set of integers'>
+    <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP330213200a5e009e699100002165gg0i9869acb2?MSPStoreType=image/gif&amp;s=8'
+         alt='Z is the set of integers'
+         title='Z is the set of integers'
+         width='145'
+         height='19' />
+                <link url='http://reference.wolfram.com/language/ref/Integers.html'
+                      text='Documentation'
+                      title='Documentation' />
+                <link url='http://mathworld.wolfram.com/Z.html'
+                      text='Definition'
+                      title='MathWorld' />
+   </info>
+  </infos>
+ </pod>
+    <pod title='Series expansion at x = 0'
+         scanner='Series'
+         id='SeriesExpansionAtx=0.'
+         position='700'
+         error='false'
+         numsubpods='1'>
+  <subpod title=''>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP330313200a5e009e69910000620b679b7digi8cc?MSPStoreType=image/gif&amp;s=8'
+        alt='1 + x^2 + (2 x^4)/3 + O(x^5)
+(Taylor series)'
+        title='1 + x^2 + (2 x^4)/3 + O(x^5)
+(Taylor series)'
+        width='141'
+        height='63'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+      <plaintext>1 + x^2 + (2 x^4)/3 + O(x^5)
+(Taylor series)</plaintext>
+  </subpod>
+        <expressiontypes count='1'>
+   <expressiontype name='Default' />
+  </expressiontypes>
+        <infos count='1'>
+   <info>
+    <link url='http://mathworld.wolfram.com/Big-ONotation.html'
+          text='Big‐O notation' />
+   </info>
+  </infos>
+ </pod>
+    <pod title='Indefinite integral'
+         scanner='Integral'
+         id='IndefiniteIntegral'
+         position='800'
+         error='false'
+         numsubpods='1'
+         primary='true'>
+  <subpod title=''>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP330413200a5e009e699100004c9bgh5d86fih9a8?MSPStoreType=image/gif&amp;s=8'
+        alt='integral sec^2(x) dx = tan(x) + constant'
+        title='integral sec^2(x) dx = tan(x) + constant'
+        width='224'
+        height='36'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+      <plaintext>integral sec^2(x) dx = tan(x) + constant</plaintext>
+  </subpod>
+        <expressiontypes count='1'>
+   <expressiontype name='Default' />
+  </expressiontypes>
+        <states count='1'>
+   <state name='Step-by-step solution'
+          input='IndefiniteIntegral__Step-by-step solution'
+          stepbystep='true' />
+  </states>
+ </pod>
+    <pod title='Global minima'
+         scanner='GlobalExtrema'
+         id='GlobalMinimum'
+         position='900'
+         error='false'
+         numsubpods='2'>
+  <subpod title=''>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP330513200a5e009e699100005bedfa6d4ief8ae9?MSPStoreType=image/gif&amp;s=8'
+        alt='min{sec^2(x)} = 1 at x = 2 π n for integer n'
+        title='min{sec^2(x)} = 1 at x = 2 π n for integer n'
+        width='285'
+        height='24'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+      <plaintext>min{sec^2(x)} = 1 at x = 2 π n for integer n</plaintext>
+  </subpod>
+        <subpod title=''>
+   <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP330613200a5e009e699100001cdhc71f48820ddh?MSPStoreType=image/gif&amp;s=8'
+        alt='min{sec^2(x)} = 1 at x = 2 π n - π for integer n'
+        title='min{sec^2(x)} = 1 at x = 2 π n - π for integer n'
+        width='309'
+        height='24'
+        type='Default'
+        themes='1,2,3,4,5,6,7,8,9,10,11,12'
+        colorinvertable='true'
+        contenttype='image/gif' />
+            <plaintext>min{sec^2(x)} = 1 at x = 2 π n - π for integer n</plaintext>
+  </subpod>
+        <expressiontypes count='2'>
+   <expressiontype name='Default' />
+            <expressiontype name='Default' />
+  </expressiontypes>
+        <states count='3'>
+   <state name='More'
+          input='GlobalMinimum__More' />
+            <state name='Approximate forms'
+                   input='GlobalMinimum__Approximate forms' />
+            <state name='Step-by-step solution'
+                   input='GlobalMinimum__Step-by-step solution'
+                   stepbystep='true' />
+  </states>
+ </pod>
+</queryresult>

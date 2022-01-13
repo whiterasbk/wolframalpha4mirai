@@ -1,0 +1,532 @@
+{
+  "queryresult": {
+    "success": true,
+    "error": false,
+    "numpods": 9,
+    "datatypes": "D",
+    "timedout": "FunctionProperties,GlobalExtrema,InterestingDefiniteIntegrals,InterestingMultiDimensionalDefiniteIntegrals",
+    "timedoutpods": "",
+    "timing": 8.098,
+    "parsetiming": 9.4e-2,
+    "parsetimedout": false,
+    "recalculate": "https://www6b3.wolframalpha.com/api/v1/recalc.jsp?id\u003dMSPa97111251b5ggiiii15e5000050i894a1f3ha3ahf6235443652248981561\u0026output\u003dJSON",
+    "id": "MSP97121251b5ggiiii15e500005d1cfcii5g7e0489",
+    "host": "https://www6b3.wolframalpha.com",
+    "server": "5",
+    "related": "https://www6b3.wolframalpha.com/api/v1/relatedQueries.jsp?id\u003dMSPa97131251b5ggiiii15e500005e6gd9984i4383ci6235443652248981561",
+    "version": "2.6",
+    "inputstring": "dx{tanx}",
+    "pods": [
+      {
+        "title": "Derivative",
+        "scanner": "Derivative",
+        "id": "Input",
+        "position": 100,
+        "error": false,
+        "numsubpods": 1,
+        "primary": true,
+        "subpods": [
+          {
+            "title": "",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97141251b5ggiiii15e5000036ddd7g6f2988888?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "d/dx(tan(x)) \u003d sec^2(x)",
+              "title": "d/dx(tan(x)) \u003d sec^2(x)",
+              "width": 140,
+              "height": 39,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "d/dx(tan(x)) \u003d sec^2(x)"
+          }
+        ],
+        "expressiontypes": {
+          "name": "Default"
+        },
+        "states": [
+          {
+            "name": "Step-by-step solution",
+            "input": "Input__Step-by-step solution",
+            "stepbystep": true
+          }
+        ],
+        "infos": {
+          "text": "sec(x) is the secant function",
+          "img": {
+            "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97151251b5ggiiii15e5000040a96188b0g94974?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+            "alt": "sec(x) is the secant function",
+            "title": "sec(x) is the secant function",
+            "width": "183",
+            "height": "19"
+          },
+          "links": [
+            {
+              "url": "http://reference.wolfram.com/language/ref/Sec.html",
+              "text": "Documentation",
+              "title": "Mathematica"
+            },
+            {
+              "url": "http://functions.wolfram.com/ElementaryFunctions/Sec",
+              "text": "Properties",
+              "title": "Wolfram Functions Site"
+            },
+            {
+              "url": "http://mathworld.wolfram.com/Secant.html",
+              "text": "Definition",
+              "title": "MathWorld"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Plots",
+        "scanner": "Plotter",
+        "id": "Plot",
+        "position": 200,
+        "error": false,
+        "numsubpods": 2,
+        "subpods": [
+          {
+            "title": "",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97161251b5ggiiii15e50000429b44fhe1e2047d?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "Plots",
+              "title": "",
+              "width": 337,
+              "height": 150,
+              "type": "2DMathPlot_1",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": ""
+          },
+          {
+            "title": "",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97171251b5ggiiii15e5000038a9d6816i3ighh2?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "Plots",
+              "title": "",
+              "width": 351,
+              "height": 154,
+              "type": "2DMathPlot_1",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": ""
+          }
+        ],
+        "expressiontypes": [
+          {
+            "name": "Default"
+          },
+          {
+            "name": "Default"
+          }
+        ]
+      },
+      {
+        "title": "Alternate forms",
+        "scanner": "Simplification",
+        "id": "AlternateForm",
+        "position": 300,
+        "error": false,
+        "numsubpods": 3,
+        "subpods": [
+          {
+            "title": "",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97181251b5ggiiii15e500002c1eg8bb1778da06?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "1/(cos^2(x))",
+              "title": "1/(cos^2(x))",
+              "width": 52,
+              "height": 42,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "1/(cos^2(x))"
+          },
+          {
+            "title": "",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97191251b5ggiiii15e500003hggb09g969330bi?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "2/(cos(2 x) + 1)",
+              "title": "2/(cos(2 x) + 1)",
+              "width": 80,
+              "height": 40,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "2/(cos(2 x) + 1)"
+          },
+          {
+            "title": "",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97201251b5ggiiii15e5000034118fg1ac81c32c?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "4/(e^(-i x) + e^(i x))^2",
+              "title": "4/(e^(-i x) + e^(i x))^2",
+              "width": 87,
+              "height": 45,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "4/(e^(-i x) + e^(i x))^2"
+          }
+        ],
+        "expressiontypes": [
+          {
+            "name": "Default"
+          },
+          {
+            "name": "Default"
+          },
+          {
+            "name": "Default"
+          }
+        ]
+      },
+      {
+        "title": "Alternate form assuming x is real",
+        "scanner": "Simplification",
+        "id": "AlternateFormAssumingAllVariablesAreReal",
+        "position": 400,
+        "error": false,
+        "numsubpods": 1,
+        "subpods": [
+          {
+            "title": "",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97211251b5ggiiii15e50000324e8fbcechd73ii?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "(4 cos^2(x))/(cos(2 x) + 1)^2",
+              "title": "(4 cos^2(x))/(cos(2 x) + 1)^2",
+              "width": 97,
+              "height": 47,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "(4 cos^2(x))/(cos(2 x) + 1)^2"
+          }
+        ],
+        "expressiontypes": {
+          "name": "Default"
+        }
+      },
+      {
+        "title": "Roots",
+        "scanner": "Reduce",
+        "id": "NoSolutionsFromReduce",
+        "position": 500,
+        "error": false,
+        "numsubpods": 1,
+        "primary": true,
+        "subpods": [
+          {
+            "title": "",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97221251b5ggiiii15e50000277gd17he00ed95a?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "(no roots exist)",
+              "title": "(no roots exist)",
+              "width": 98,
+              "height": 19,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "(no roots exist)"
+          }
+        ],
+        "expressiontypes": {
+          "name": "Default"
+        },
+        "states": [
+          {
+            "name": "Step-by-step solution",
+            "input": "NoSolutionsFromReduce__Step-by-step solution",
+            "stepbystep": true
+          }
+        ]
+      },
+      {
+        "title": "Properties as a real function",
+        "scanner": "FunctionProperties",
+        "id": "PropertiesAsARealFunction",
+        "position": 600,
+        "error": false,
+        "numsubpods": 4,
+        "subpods": [
+          {
+            "title": "Domain",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97231251b5ggiiii15e50000394iig7f5fab5967?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "{x element R : x/π + 1/2 not element Z}",
+              "title": "{x element R : x/π + 1/2 not element Z}",
+              "width": 132,
+              "height": 37,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "{x element R : x/π + 1/2 not element Z}"
+          },
+          {
+            "title": "Range",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97241251b5ggiiii15e500004b23e6h979e7b147?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "{y element R : y\u003e\u003d1}",
+              "title": "{y element R : y\u003e\u003d1}",
+              "width": 98,
+              "height": 19,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "{y element R : y\u003e\u003d1}"
+          },
+          {
+            "title": "Periodicity",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97251251b5ggiiii15e500002cf5haaad24heie8?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "periodic in x with period π",
+              "title": "periodic in x with period π",
+              "width": 174,
+              "height": 19,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "periodic in x with period π"
+          },
+          {
+            "title": "Parity",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97261251b5ggiiii15e500002ih7egd5a54i9f9f?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "even",
+              "title": "even",
+              "width": 30,
+              "height": 19,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "even"
+          }
+        ],
+        "expressiontypes": [
+          {
+            "name": "Default"
+          },
+          {
+            "name": "Default"
+          },
+          {
+            "name": "Default"
+          },
+          {
+            "name": "Default"
+          }
+        ],
+        "states": [
+          {
+            "name": "Approximate forms",
+            "input": "PropertiesAsARealFunction__Approximate forms"
+          }
+        ],
+        "infos": [
+          {
+            "text": "R is the set of real numbers",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97271251b5ggiiii15e500002cb25d83b3icc977?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "R is the set of real numbers",
+              "title": "R is the set of real numbers",
+              "width": "180",
+              "height": "19"
+            },
+            "links": [
+              {
+                "url": "http://reference.wolfram.com/language/ref/Reals.html",
+                "text": "Documentation",
+                "title": "Documentation"
+              },
+              {
+                "url": "http://mathworld.wolfram.com/R.html",
+                "text": "Definition",
+                "title": "MathWorld"
+              }
+            ]
+          },
+          {
+            "text": "Z is the set of integers",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97281251b5ggiiii15e500006a9834b24g7d540i?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "Z is the set of integers",
+              "title": "Z is the set of integers",
+              "width": "145",
+              "height": "19"
+            },
+            "links": [
+              {
+                "url": "http://reference.wolfram.com/language/ref/Integers.html",
+                "text": "Documentation",
+                "title": "Documentation"
+              },
+              {
+                "url": "http://mathworld.wolfram.com/Z.html",
+                "text": "Definition",
+                "title": "MathWorld"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Series expansion at x \u003d 0",
+        "scanner": "Series",
+        "id": "SeriesExpansionAtx\u003d0.",
+        "position": 700,
+        "error": false,
+        "numsubpods": 1,
+        "subpods": [
+          {
+            "title": "",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97291251b5ggiiii15e500003b1b0h79edc0ib46?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "1 + x^2 + (2 x^4)/3 + O(x^5)\n(Taylor series)",
+              "title": "1 + x^2 + (2 x^4)/3 + O(x^5)\n(Taylor series)",
+              "width": 141,
+              "height": 63,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "1 + x^2 + (2 x^4)/3 + O(x^5)\n(Taylor series)"
+          }
+        ],
+        "expressiontypes": {
+          "name": "Default"
+        },
+        "infos": {
+          "links": {
+            "url": "http://mathworld.wolfram.com/Big-ONotation.html",
+            "text": "Big‐O notation"
+          }
+        }
+      },
+      {
+        "title": "Indefinite integral",
+        "scanner": "Integral",
+        "id": "IndefiniteIntegral",
+        "position": 800,
+        "error": false,
+        "numsubpods": 1,
+        "primary": true,
+        "subpods": [
+          {
+            "title": "",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97301251b5ggiiii15e5000028d5bid877ad8920?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "integral sec^2(x) dx \u003d tan(x) + constant",
+              "title": "integral sec^2(x) dx \u003d tan(x) + constant",
+              "width": 224,
+              "height": 36,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "integral sec^2(x) dx \u003d tan(x) + constant"
+          }
+        ],
+        "expressiontypes": {
+          "name": "Default"
+        },
+        "states": [
+          {
+            "name": "Step-by-step solution",
+            "input": "IndefiniteIntegral__Step-by-step solution",
+            "stepbystep": true
+          }
+        ]
+      },
+      {
+        "title": "Global minima",
+        "scanner": "GlobalExtrema",
+        "id": "GlobalMinimum",
+        "position": 900,
+        "error": false,
+        "numsubpods": 2,
+        "subpods": [
+          {
+            "title": "",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97311251b5ggiiii15e5000057e00f4519b0d5eb?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "min{sec^2(x)} \u003d 1 at x \u003d 2 π n for integer n",
+              "title": "min{sec^2(x)} \u003d 1 at x \u003d 2 π n for integer n",
+              "width": 285,
+              "height": 24,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "min{sec^2(x)} \u003d 1 at x \u003d 2 π n for integer n"
+          },
+          {
+            "title": "",
+            "img": {
+              "src": "https://www6b3.wolframalpha.com/Calculate/MSP/MSP97321251b5ggiiii15e5000034c611g63i3aad20?MSPStoreType\u003dimage/gif\u0026s\u003d5",
+              "alt": "min{sec^2(x)} \u003d 1 at x \u003d 2 π n - π for integer n",
+              "title": "min{sec^2(x)} \u003d 1 at x \u003d 2 π n - π for integer n",
+              "width": 309,
+              "height": 24,
+              "type": "Default",
+              "themes": "1,2,3,4,5,6,7,8,9,10,11,12",
+              "colorinvertable": true,
+              "contenttype": "image/gif"
+            },
+            "plaintext": "min{sec^2(x)} \u003d 1 at x \u003d 2 π n - π for integer n"
+          }
+        ],
+        "expressiontypes": [
+          {
+            "name": "Default"
+          },
+          {
+            "name": "Default"
+          }
+        ],
+        "states": [
+          {
+            "name": "More",
+            "input": "GlobalMinimum__More"
+          },
+          {
+            "name": "Approximate forms",
+            "input": "GlobalMinimum__Approximate forms"
+          },
+          {
+            "name": "Step-by-step solution",
+            "input": "GlobalMinimum__Step-by-step solution",
+            "stepbystep": true
+          }
+        ]
+      }
+    ]
+  }
+}
