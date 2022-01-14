@@ -100,7 +100,7 @@ object Wolframalpha : KotlinPlugin(
         return if (msg.isEmpty()) {
             msg + PlainText(errorMsg)
         } else {
-            if (str == "中国" || str.equals("China", true)) msg + "\n注: 以上的地图为错误地图, 台湾是中国的一部分" else msg
+            if (str == "中国" || str == "中华人民共和国" || str.equals("China", true) || str.equals("the People's Republic of China", true) || str.equals("PRC", true)) msg + "\n注: 以上的地图为错误地图, 台湾是中国的一部分" else msg
         }
     }
 
