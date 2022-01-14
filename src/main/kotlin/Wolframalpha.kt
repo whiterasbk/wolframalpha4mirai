@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets
 object Wolframalpha : KotlinPlugin(
     JvmPluginDescription(
         id = "whiter.bot.wolframalpha",
-        version = "1.0-SNAPSHOT",
+        version = "1.1-SNAPSHOT",
     )
 ) {
     private lateinit var appid: String
