@@ -9,8 +9,10 @@
 3. 启动一次 mirai 并关闭, 或者你也可以在 `config\` 下新建 `whiter.bot.wolframalpha\config.yml` 文件
 4. 按照如下方式编辑 `config.yml`
 ```yaml
-appid: 'your appid' # 填入刚刚获得的appid
-prefix: '' # 触发前缀, 可以省略, 省略时默认使用两个单引号做触发前缀
+appid: 'your appid' # 填入刚刚获得的appid, 必需
+prefix: '' # 触发前缀, 可选, 省略时默认使用两个单引号做为触发前缀
+error_msg: '' # 错误提示信息, 可选
+separation_line: '' # 分隔符, 可选, 默认为‘---------’, 若填empty则无分隔符
 ```
 5. 启动 mirai
 

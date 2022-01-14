@@ -26,14 +26,23 @@ object Wolframalpha : KotlinPlugin(
         version = "1.0-SNAPSHOT",
     )
 ) {
-    lateinit var appid: String
+    private lateinit var appid: String
+    lateinit var errorMsg: String
+    private lateinit var slice: String
+    private lateinit var separationLine: String
 
     override fun onEnable() {
         logger.info { "WolframAlpha Plugin loaded" }
         Config.reload()
         appid = Config.appid
         if (appid.isEmpty()) throw Exception("your appid can not be empty")
-        val slice = if (Config.prefix == "") "''" else Config.prefix
+        slice = if (Config.prefix == "") "''" else Config.prefix
+        errorMsg = if (Config.error_msg == "") "wolfram|alpha抽风啦" else Config.error_msg
+        separationLine = when (Config.separation_line) {
+            "" -> "\n---------"
+            "empty" -> ""
+            else -> Config.separation_line
+        }
 
         globalEventChannel().subscribeAlways<GroupMessageEvent> {
             if (message.contentToString().startsWith(slice)) {
@@ -56,7 +65,7 @@ object Wolframalpha : KotlinPlugin(
      * @param subject 发送对象
      * @return 消息链，总是返回非空消息
      */
-    suspend fun query(str: String, subject: Contact): MessageChain {
+    private suspend fun query(str: String, subject: Contact): MessageChain {
         var msg: MessageChain = EmptyMessageChain
         val query = URLEncoder.encode(str, "utf-8")
         val url = "http://api.wolframalpha.com/v2/query?appid=$appid&input=$query&output=json"
@@ -68,26 +77,28 @@ object Wolframalpha : KotlinPlugin(
             for (pod in pods) {
                 pod as JSONObject
 
-                val title = pod.getString("title")
+                val title = pod["title"]
 
                 logger.info("\n## $title:\n")
                 msg += if (c++ == 0) PlainText("# $title: \n") else PlainText("\n# $title: \n")
 
-                for (i in 0 until pod.getInt("numsubpods")) {
+                for (i in 0 until pod["numsubpods"] as Int) {
                     val item = pod.getJSONArray("subpods").getJSONObject(i)
                     val img_src = item.getJSONObject("img").getString("src")
-                    val img = URL(img_src).openStream().uploadAsImage(subject)
+                    val openStream = URL(img_src).openStream()
+                    val img = openStream.uploadAsImage(subject)
                     msg += img
                     logger.info("![]($img_src)\n")
+                    openStream.close()
                 }
 
-                msg += PlainText("\n---------")
+                msg += PlainText(separationLine)
                 logger.info("\n---------\n")
             }
         }
 
         return if (msg.isEmpty()) {
-            msg + PlainText("wolfram|alpha抽风啦")
+            msg + PlainText(errorMsg)
         } else msg
     }
 
@@ -96,19 +107,21 @@ object Wolframalpha : KotlinPlugin(
      * @param url 链接
      * @return 返回的字符串
      */
-    fun doGet(url: String) : String {
-        val url_ = URL(url)
-        val con = url_.openConnection()
-        val http = con as HttpURLConnection
-        http.requestMethod = "GET"
-        http.setRequestProperty("Content-Type", "application/json; utf-8")
-        http.setRequestProperty("Accept", "application/json")
-        http.connect()
-        return InputStreamReader(http.inputStream, StandardCharsets.UTF_8).readText()
+    private fun doGet(url: String) : String {
+        val url = URL(url)
+        val con = url.openConnection()
+        val req = con as HttpURLConnection
+        req.requestMethod = "GET"
+        req.setRequestProperty("Content-Type", "application/json; utf-8")
+        req.setRequestProperty("Accept", "application/json")
+        req.connect()
+        return InputStreamReader(req.inputStream, StandardCharsets.UTF_8).readText()
     }
 }
 
 object Config : AutoSavePluginConfig("config") {
     val appid: String by value()
     val prefix: String by value()
+    val error_msg: String by value()
+    val separation_line: String by value()
 }
