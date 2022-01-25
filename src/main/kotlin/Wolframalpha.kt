@@ -13,6 +13,7 @@ import net.mamoe.mirai.message.data.MessageChain
 import net.mamoe.mirai.message.data.PlainText
 import net.mamoe.mirai.utils.ExternalResource.Companion.uploadAsImage
 import net.mamoe.mirai.utils.info
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -74,16 +75,15 @@ object Wolframalpha : KotlinPlugin(
 
         if (json.getBoolean("success")) {
             val pods = json.getJSONArray("pods")
-            for (pod in pods) {
-                pod as JSONObject
 
-                val title = pod["title"]
-
+            // 兼容 android
+            pods.foreach {
+                val title = it["title"]
                 logger.info("\n## $title:\n")
                 msg += if (c++ == 0) PlainText("# $title: \n") else PlainText("\n# $title: \n")
 
-                for (i in 0 until pod["numsubpods"] as Int) {
-                    val item = pod.getJSONArray("subpods").getJSONObject(i)
+                for (i in 0 until it["numsubpods"] as Int) {
+                    val item = it.getJSONArray("subpods").getJSONObject(i)
                     val img_src = item.getJSONObject("img").getString("src")
                     val openStream = URL(img_src).openStream()
                     val img = openStream.uploadAsImage(subject)
@@ -95,6 +95,7 @@ object Wolframalpha : KotlinPlugin(
                 msg += PlainText(separationLine)
                 logger.info("\n---------\n")
             }
+
         }
 
         return if (msg.isEmpty()) {
@@ -118,6 +119,12 @@ object Wolframalpha : KotlinPlugin(
         req.setRequestProperty("Accept", "application/json")
         req.connect()
         return InputStreamReader(req.inputStream, StandardCharsets.UTF_8).readText()
+    }
+}
+
+suspend fun JSONArray.foreach(action: suspend (JSONObject) -> Unit) {
+    for (i in 0 until this.length()) {
+        action(this[i] as JSONObject)
     }
 }
 
