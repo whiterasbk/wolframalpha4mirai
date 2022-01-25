@@ -9,7 +9,7 @@ plugins {
 }
 
 group = 'whiter.bot'
-version = '1.0-SNAPSHOT'
+version = '1.2'
 
 // copy .\build\libs\wolframalpha-1.0-SNAPSHOT.jar D:\whiter\pinelliaternata\plugins\
 task cpjar {
