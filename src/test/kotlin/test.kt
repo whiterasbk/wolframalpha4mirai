@@ -1,4 +1,7 @@
+// 测试
+
 import org.json.JSONObject
+import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
@@ -11,16 +14,22 @@ import java.nio.charset.StandardCharsets
 
 
 fun main(args: Array<String>) {
-    val appid = ""
+    val appid = File("appid").readText()
     var query = "population%20of%20france"
     query = "lim\\frac{sinx}{x}"
     query = "population of China"
+    query = "polybenzimidazole"
+//    query = "vsdjvbskdbv"
+//    query = "intarnetinoal"
+//    query = "konodioda"
+//    query = "the country that hosts? 2022 Olympic"
+//    query = "hosts 2022 Olympic"
 
 
     query = URLEncoder.encode(query, "utf-8")
 
     val url = "http://api.wolframalpha.com/v2/query?appid=$appid&input=$query&output=json"
-//   println(GET(url))
+   println(GET(url))
 
 //    val json = JSONObject(File("src/test/kotlin/result.json").readText()).getJSONObject("queryresult")
     val json = JSONObject(GET(url)).getJSONObject("queryresult")
@@ -48,6 +57,20 @@ fun main(args: Array<String>) {
 
             println("---")
         }
+    } else if (json.getBoolean("error") == false) {
+
+        if (json.has("didyoumeans")) {
+            val dum = json.getJSONObject("didyoumeans")
+            val msg = "wolfram|alpha提供的api搜索不到结果, 基于输入值$query, 猜测您有${dum.getFloat("score") * 100}%的概率是想查找: ${dum.getString("val")}"
+            println(msg)
+        } else if (json.has("tips")) {
+            val tips = json.getJSONObject("tips").getString("text")
+
+//            val msg = "wolfram|alpha提供的api搜索不到结果, 基于输入值$query, 猜测您有${dum.getFloat("score") * 100}%的概率是想查找: ${dum.getString("val")}"
+            println(tips)
+        }
+    } else {
+        println("error")
     }
 }
 

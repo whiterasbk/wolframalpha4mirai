@@ -9,17 +9,19 @@ plugins {
 }
 
 group = 'whiter.bot'
-version = '1.2'
+version = '1.3'
 
-// copy .\build\libs\wolframalpha-1.0-SNAPSHOT.jar D:\whiter\pinelliaternata\plugins\
+/**
+ * 这个任务是方便咱自己在本地调试插件用的, 作用是在完成jar任务以后将./build/libs/生成的jar包自动复制到mirai的plugin目录
+ * 如果你想使用这个任务进行自动化复制jar包, 只需要把into后面的参数改为你的mirai插件目录的实际路径即可
+ */
 task cpjar {
     group('build')
     dependsOn jar
     doLast {
         copy {
-            from '.\\build\\libs\\wolframalpha-1.0-SNAPSHOT.jar' into 'D:\\whiter\\pinelliaternata\\plugins\\'
+            from '.\\build\\libs\\' + project.name + '-' + version + '.jar' into 'D:\\whiter\\pinelliaternata\\plugins\\'
         }
-        // println "D:\\whiter\\pinelliaternata\\mcl.cmd".execute()
     }
 }
 
@@ -35,6 +37,7 @@ dependencies {
     testCompile 'org.projectlombok:lombok:1.18.16'
     // implementation 'org.projectlombok:lombok:1.18.16'
 }
+
 compileKotlin {
     kotlinOptions {
         jvmTarget = "1.8"

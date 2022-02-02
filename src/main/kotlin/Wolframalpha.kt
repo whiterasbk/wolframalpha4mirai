@@ -24,7 +24,7 @@ import java.nio.charset.StandardCharsets
 object Wolframalpha : KotlinPlugin(
     JvmPluginDescription(
         id = "whiter.bot.wolframalpha",
-        version = "1.2",
+        version = "1.3",
     )
 ) {
     private lateinit var appid: String
@@ -75,7 +75,6 @@ object Wolframalpha : KotlinPlugin(
 
         if (json.getBoolean("success")) {
             val pods = json.getJSONArray("pods")
-
             // 兼容 android
             pods.foreach {
                 val title = it["title"]
@@ -96,12 +95,39 @@ object Wolframalpha : KotlinPlugin(
                 logger.info("\n---------\n")
             }
 
+        } else if (json.getBoolean("error") == false) {
+            if (json.has("didyoumeans")) {
+                val dum = json.getJSONObject("didyoumeans")
+                msg += "wolfram|alpha提供的api搜索不到结果, 基于输入值$query, 猜测您" +
+//                        "有${dum.getFloat("score") * 100}%的概率" +
+                        "可能是想查找: ${dum.getString("val")}"
+                logger.info("> $msg")
+            } else if (json.has("tips")) {
+                val tips = json.getJSONObject("tips").getString("text")
+                msg += tips
+                logger.info("> $msg")
+            }
+        } else {
+            logger.info("# error")
         }
 
         return if (msg.isEmpty()) {
             msg + PlainText(errorMsg)
         } else {
-            if (str == "中国" || str == "中华人民共和国" || str.equals("China", true) || str.equals("the People's Republic of China", true) || str.equals("PRC", true)) msg + "\n注: 以上的地图为错误地图, 台湾是中国的一部分" else msg
+            // wolframalpha给出的中国地图是错误的
+            if (str == "中国" || str == "中华人民共和国" ||
+                str == "台湾" || str == "台北" ||
+                str == "中国台湾" || str == "中国台北" ||
+                str == "藏南" || str == "zangnan" ||
+                str.equals("China", true) ||
+                str.equals("the People's Republic of China", true) ||
+                str.equals("PRC", true) ||
+                str.equals("taiwan", true) ||
+                str.equals("taipei", true) ||
+                str.equals("chinese taipei", true) ||
+                str.equals("taipei city", true) ||
+                str.equals("People's Republic of China", true)
+            ) msg + "\n注: 以上的地图是错误的, 台湾和藏南是中国领土的一部分" else msg
         }
     }
 
