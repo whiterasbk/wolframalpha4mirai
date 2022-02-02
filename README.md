@@ -4,7 +4,7 @@
 添加后, 你可以在 qq 里直接向 wolframalpha 发出查询请求
 
 ### 使用方法
-1. 将 [release](https://github.com/whiterasbk/wolframalpha4mirai/releases/tag/1.2) 下的 [wolframalpha4mirai.jar](https://github.com/whiterasbk/wolframalpha4mirai/releases/download/1.2/wolframalpha4mirai-with-org.json.jar) 文件下载并放入 mirai 运行目录下的 `plugins\` 文件夹
+1. 将 [release](https://github.com/whiterasbk/wolframalpha4mirai/releases/tag/1.2) 下的 [wolframalpha4mirai.jar](https://github.com/whiterasbk/wolframalpha4mirai/releases/download/1.2/wolframalpha.jar) 文件下载并放入 mirai 运行目录下的 `plugins\` 文件夹
 2. 前往 [此处](https://developer.wolframalpha.com/portal/myapps/index.html) 按照提示获取一个 **appid**
 3. 启动一次 mirai 并关闭, 或者你也可以在 `config\` 下新建 `whiter.bot.wolframalpha\config.yml` 文件
 4. 按照如下方式编辑 `config.yml`
@@ -28,4 +28,4 @@ E/whiter.bot.wolframalpha: Exception in coroutine Plugin whiter.bot.wolframalpha
     java.lang.NoClassDefFoundError: org/json/JSONObject
     at whiter.bot.Wolframalpha.query(Wolframalpha.kt:57)
 ```
- 则 **使用方法** `步骤 1` 中需要下载 [wolframalpha4mirai-with-org.json.jar](https://github.com/whiterasbk/wolframalpha4mirai/releases/download/fixed/wolframalpha4mirai-with-org.json.jar) 文件而不是 `wolframalpha4mirai.jar`
+ 则 **使用方法** `步骤 1` 中需要下载 [wolframalpha4mirai-with-org.json.jar](https://github.com/whiterasbk/wolframalpha4mirai/releases/download/1.2/wolframalpha4mirai-with-org.json.jar) 文件而不是 `wolframalpha4mirai.jar`
