@@ -4,8 +4,7 @@
 添加后, 你可以在 qq 里直接向 wolframalpha 发出查询请求
 
 ### 使用方法
-1. 将 [release](
-https://github.com/whiterasbk/wolframalpha4mirai/releases/tag/1.3) 下的 [wolframalpha4mirai.jar](https://github.com/whiterasbk/wolframalpha4mirai/releases/download/1.3/wolframalpha-1.3.jar) 文件下载并放入 mirai 运行目录下的 `plugins\` 文件夹
+1. 将 [release](https://github.com/whiterasbk/wolframalpha4mirai/releases/tag/1.3) 下的 [wolframalpha4mirai.jar](https://github.com/whiterasbk/wolframalpha4mirai/releases/download/1.3/wolframalpha-1.3.jar) 文件下载并放入 mirai 运行目录下的 `plugins\` 文件夹
 2. 前往 [此处](https://developer.wolframalpha.com/portal/myapps/index.html) 按照提示获取一个 **appid**
 3. 启动一次 mirai 并关闭, 或者你也可以在 `config\` 下新建 `whiter.bot.wolframalpha\config.yml` 文件
 4. 按照如下方式编辑 `config.yml`
@@ -13,7 +12,7 @@ https://github.com/whiterasbk/wolframalpha4mirai/releases/tag/1.3) 下的 [wolfr
 appid: 'your appid' # 填入刚刚获得的appid, 必需
 prefix: '' # 触发前缀, 可选, 省略时默认使用两个单引号做为触发前缀
 error_msg: '' # 错误提示信息, 可选
-separation_line: '' # 分隔符, 可选, 默认为‘---------’, 若填empty则无分隔符
+separation_line: '' # 分隔符, 可选, 默认为'---------', 若填empty则无分隔符
 ```
 5. 启动 mirai
 

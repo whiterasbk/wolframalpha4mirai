@@ -95,7 +95,7 @@ object Wolframalpha : KotlinPlugin(
                 logger.info("\n---------\n")
             }
 
-        } else if (json.getBoolean("error") == false) {
+        } else if (!json.getBoolean("error")) {
             if (json.has("didyoumeans")) {
                 val dum = json.getJSONObject("didyoumeans")
                 msg += "wolfram|alpha提供的api搜索不到结果, 基于输入值$query, 猜测您" +
