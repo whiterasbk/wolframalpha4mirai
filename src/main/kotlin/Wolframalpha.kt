@@ -18,6 +18,7 @@ import org.json.JSONObject
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
@@ -95,19 +96,58 @@ object Wolframalpha : KotlinPlugin(
                 logger.info("\n---------\n")
             }
 
-        } else if (!json.getBoolean("error")) {
+        } else if (json.get("error") is Boolean && !json.getBoolean("error")) {
             if (json.has("didyoumeans")) {
-                val dum = json.getJSONObject("didyoumeans")
-                msg += "wolfram|alpha提供的api搜索不到结果, 基于输入值$query, 猜测您" +
+                if (json["didyoumeans"] is JSONObject) {
+                    val dum = json.getJSONObject("didyoumeans")
+                    msg += "wolfram|alpha提供的api搜索不到结果, 基于输入值$str, 猜测您" +
 //                        "有${dum.getFloat("score") * 100}%的概率" +
-                        "可能是想查找: ${dum.getString("val")}"
-                logger.info("> $msg")
-            } else if (json.has("tips")) {
+                            "可能是想查找: ${dum.getString("val")}"
+                    logger.info("> $msg")
+                } else if (json["didyoumeans"] is JSONArray) {
+                    val dums = json.getJSONArray("didyoumeans")
+                    msg += "wolfram|alpha提供的api搜索不到结果, 基于输入值$str, 猜测您" +
+//                        "有${dum.getFloat("score") * 100}%的概率" +
+                            "可能是想查找: \n"
+                    dums.foreachi { it, index ->
+                        msg += "${index + 1}. " + it.get("val") + "\n"
+                    }
+                    logger.info("> $msg")
+                } else  {
+                    // re
+                    msg += json["didyoumeans"].toString()
+                }
+            }
+
+            if (json.has("tips")) {
                 val tips = json.getJSONObject("tips").getString("text")
                 msg += tips
                 logger.info("> $msg")
             }
+
+            if (json.has("languagemsg")) {
+                if (json["languagemsg"] is JSONObject) {
+                    for (i in json.getJSONObject("languagemsg").keys()) {
+                        msg += json.getJSONObject("languagemsg").get(i).toString()
+                    }
+                } else {
+                    msg += json["languagemsg"].toString()
+                }
+            }
         } else {
+            if (json["error"] is JSONObject) {
+                for (i in json.getJSONObject("error").keys()) {
+                    val errmsg = json.getJSONObject("error").get(i)
+                    msg += "$i: $errmsg; \n"
+                }
+            } else if (json["error"] is JSONArray) {
+                json.getJSONArray("error").foreach {
+                    msg += it.toString() + "\n"
+                }
+            } else {
+                msg += "error: " + json["error"].toString()
+            }
+
             logger.info("# error")
         }
 
@@ -151,6 +191,12 @@ object Wolframalpha : KotlinPlugin(
 suspend fun JSONArray.foreach(action: suspend (JSONObject) -> Unit) {
     for (i in 0 until this.length()) {
         action(this[i] as JSONObject)
+    }
+}
+
+suspend fun JSONArray.foreachi(action: suspend (JSONObject, Int) -> Unit) {
+    for (i in 0 until this.length()) {
+        action(this[i] as JSONObject, i)
     }
 }
 
