@@ -39,7 +39,7 @@ object Wolframalpha : KotlinPlugin(
         appid = Config.appid
         if (appid.isEmpty()) throw Exception("your appid can not be empty")
         slice = if (Config.prefix == "") "''" else Config.prefix
-        errorMsg = if (Config.error_msg == "") "wolfram|alpha抽风啦" else Config.error_msg
+        errorMsg = if (Config.error_msg == "") "wolfram|alpha抽风啦, 管你看不看懂, 输出就完事啦: {{json}}" else Config.error_msg
         separationLine = when (Config.separation_line) {
             "" -> "\n---------"
             "empty" -> ""
@@ -152,7 +152,7 @@ object Wolframalpha : KotlinPlugin(
         }
 
         return if (msg.isEmpty()) {
-            msg + PlainText(errorMsg)
+            msg + PlainText(errorMsg.replace("{{json}}", json.toString()))
         } else {
             // wolframalpha给出的中国地图是错误的
             if (str == "中国" || str == "中华人民共和国" ||
