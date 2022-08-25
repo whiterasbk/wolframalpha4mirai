@@ -1,5 +1,10 @@
 # wolframalpha4mirai
 
+![GitHub](https://img.shields.io/github/license/whiterasbk/wolframalpha4mirai)
+![GitHub all releases](https://img.shields.io/github/downloads/whiterasbk/wolframalpha4mirai/total)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/whiterasbk/wolframalpha4mirai)
+![GitHub top language](https://img.shields.io/github/languages/top/whiterasbk/wolframalpha4mirai)
+
 这是一个将 wolframalpha api 接入 mirai 的插件
 添加后, 你可以在 qq 里直接向 wolframalpha 发出查询请求
 
