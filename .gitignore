@@ -30,3 +30,8 @@ hs_err_pid*
 appid
 dddd-\d+.gif
 testappid
+
+debug-sandbox
+.idea
+.run
+run

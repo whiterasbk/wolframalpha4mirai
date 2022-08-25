@@ -1,43 +1,50 @@
-package whiter.bot
+package bot.query.wolframalpha.whiter
 
+import io.ktor.client.*
+import io.ktor.client.engine.okhttp.*
+import io.ktor.client.request.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.mamoe.mirai.console.data.AutoSavePluginConfig
+import net.mamoe.mirai.console.data.ValueDescription
 import net.mamoe.mirai.console.data.value
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
 import net.mamoe.mirai.contact.Contact
+import net.mamoe.mirai.event.events.BotEvent
 import net.mamoe.mirai.event.events.FriendMessageEvent
 import net.mamoe.mirai.event.events.GroupMessageEvent
+import net.mamoe.mirai.event.events.MessageEvent
 import net.mamoe.mirai.event.globalEventChannel
-import net.mamoe.mirai.message.data.EmptyMessageChain
-import net.mamoe.mirai.message.data.MessageChain
-import net.mamoe.mirai.message.data.PlainText
+import net.mamoe.mirai.message.data.*
 import net.mamoe.mirai.utils.ExternalResource.Companion.uploadAsImage
 import net.mamoe.mirai.utils.info
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
-import java.net.URLDecoder
+import java.io.InputStream
 import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
+
+const val appIDSite = "https://developer.wolframalpha.com/portal/myapps/index.html"
 
 object Wolframalpha : KotlinPlugin(
     JvmPluginDescription(
-        id = "whiter.bot.wolframalpha",
-        version = "1.3",
+        id = "bot.query.wolframalpha.whiter",
+        version = "1.4"
     )
 ) {
     private lateinit var appid: String
     lateinit var errorMsg: String
     private lateinit var slice: String
     private lateinit var separationLine: String
+    private val client = HttpClient(OkHttp)
 
     override fun onEnable() {
         logger.info { "WolframAlpha Plugin loaded" }
         Config.reload()
         appid = Config.appid
-        if (appid.isEmpty()) throw Exception("your appid can not be empty")
+        if (appid.isEmpty()) throw Exception("your appid can not be empty! " +
+                "follow link $appIDSite to get a valid appid " +
+                "then set property `appid` in file $configFolderPath/config.yml")
         slice = if (Config.prefix == "") "''" else Config.prefix
         errorMsg = if (Config.error_msg == "") "wolfram|alpha抽风啦, 管你看不看懂, 输出就完事啦: {{json}}" else Config.error_msg
         separationLine = when (Config.separation_line) {
@@ -46,18 +53,29 @@ object Wolframalpha : KotlinPlugin(
             else -> Config.separation_line
         }
 
-        globalEventChannel().subscribeAlways<GroupMessageEvent> {
-            if (message.contentToString().startsWith(slice)) {
-                val msg = message.contentToString()
-                group.sendMessage(query(msg.slice(slice.length until msg.length), group))
+        val be = globalEventChannel().filter { it is BotEvent }
+
+        val handle: suspend MessageEvent.() -> Unit = {
+            if (message.content.startsWith(slice)) {
+                val messages = query(
+                    message.content.slice(slice.length until message.content.length),
+                    subject,
+                    !Config.isForward
+                )
+                subject.sendMessage(if (Config.isForward) {
+                    buildForwardMessage {
+                        for (item in messages) bot.says(item)
+                    }
+                } else messages)
             }
         }
 
-        globalEventChannel().subscribeAlways<FriendMessageEvent> {
-            if (message.contentToString().startsWith(slice)) {
-                val msg = message.contentToString()
-                sender.sendMessage(query(msg.slice(slice.length until msg.length), sender))
-            }
+        be.subscribeAlways<GroupMessageEvent> {
+            handle()
+        }
+
+        be.subscribeAlways<FriendMessageEvent> {
+            handle()
         }
     }
 
@@ -65,144 +83,146 @@ object Wolframalpha : KotlinPlugin(
      * 进行wolfram|α查询
      * @param str 查询字符串
      * @param subject 发送对象
+     * @param needSeparationLine 是否需要分割线
      * @return 消息链，总是返回非空消息
      */
-    private suspend fun query(str: String, subject: Contact): MessageChain {
-        var msg: MessageChain = EmptyMessageChain
-        val query = URLEncoder.encode(str, "utf-8")
-        val url = "http://api.wolframalpha.com/v2/query?appid=$appid&input=$query&output=json"
-        val json = JSONObject(doGet(url)).getJSONObject("queryresult")
+    suspend fun query(str: String, subject: Contact, needSeparationLine: Boolean = true): MessageChain {
+        val enterLine = if (needSeparationLine) "\n" else ""
+        val query = withContext(Dispatchers.IO) {
+            URLEncoder.encode(str, "utf-8")
+        }
+
+        val url = "https://api.wolframalpha.com/v2/query?appid=$appid&input=$query&output=json"
+        val json = JSONObject(client.get<String>(url)).getJSONObject("queryresult")
         var c = 0
 
-        if (json.getBoolean("success")) {
-            val pods = json.getJSONArray("pods")
-            // 兼容 android
-            pods.foreach {
-                val title = it["title"]
-                logger.info("\n## $title:\n")
-                msg += if (c++ == 0) PlainText("# $title: \n") else PlainText("\n# $title: \n")
+        return buildMessageChain {
+            if (json.getBoolean("success")) {
+                val pods = json.getJSONArray("pods")
+                // 兼容 android
+                pods.foreach {
+                    val title = it["title"].toString().trim()
+                    logger.info("\n## $title:\n")
+                    +(if (c++ == 0) "# $title: $enterLine" else "$enterLine# $title: $enterLine")
 
-                for (i in 0 until it["numsubpods"] as Int) {
-                    val item = it.getJSONArray("subpods").getJSONObject(i)
-                    val img_src = item.getJSONObject("img").getString("src")
-                    val openStream = URL(img_src).openStream()
-                    val img = openStream.uploadAsImage(subject)
-                    msg += img
-                    logger.info("![]($img_src)\n")
-                    openStream.close()
-                }
-
-                msg += PlainText(separationLine)
-                logger.info("\n---------\n")
-            }
-
-        } else if (json.get("error") is Boolean && !json.getBoolean("error")) {
-            if (json.has("didyoumeans")) {
-                if (json["didyoumeans"] is JSONObject) {
-                    val dum = json.getJSONObject("didyoumeans")
-                    msg += "wolfram|alpha提供的api搜索不到结果, 基于输入值$str, 猜测您" +
-//                        "有${dum.getFloat("score") * 100}%的概率" +
-                            "可能是想查找: ${dum.getString("val")}"
-                    logger.info("> $msg")
-                } else if (json["didyoumeans"] is JSONArray) {
-                    val dums = json.getJSONArray("didyoumeans")
-                    msg += "wolfram|alpha提供的api搜索不到结果, 基于输入值$str, 猜测您" +
-//                        "有${dum.getFloat("score") * 100}%的概率" +
-                            "可能是想查找: \n"
-                    dums.foreachi { it, index ->
-                        msg += "${index + 1}. " + it.get("val") + "\n"
+                    withContext(Dispatchers.IO) {
+                        for (i in 0 until it["numsubpods"] as Int) {
+                            val item = it.getJSONArray("subpods").getJSONObject(i)
+                            val imgSrc = item.getJSONObject("img").getString("src")
+                            val openStream = client.get<InputStream>(imgSrc) // URL(img_src).openStream()
+                            +openStream.uploadAsImage(subject)
+                            logger.info("![]($imgSrc)")
+                            openStream.close()
+                        }
                     }
-                    logger.info("> $msg")
-                } else  {
-                    // re
-                    msg += json["didyoumeans"].toString()
-                }
-            }
 
-            if (json.has("tips")) {
-                val tips = json.getJSONObject("tips").getString("text")
-                msg += tips
-                logger.info("> $msg")
-            }
-
-            if (json.has("languagemsg")) {
-                if (json["languagemsg"] is JSONObject) {
-                    for (i in json.getJSONObject("languagemsg").keys()) {
-                        msg += json.getJSONObject("languagemsg").get(i).toString()
+                    if (needSeparationLine) {
+                        +separationLine
+                        logger.info("\n---------\n")
                     }
-                } else {
-                    msg += json["languagemsg"].toString()
                 }
-            }
-        } else {
-            if (json["error"] is JSONObject) {
-                for (i in json.getJSONObject("error").keys()) {
-                    val errmsg = json.getJSONObject("error").get(i)
-                    msg += "$i: $errmsg; \n"
+
+            } else if (json.get("error") is Boolean && !json.getBoolean("error")) {
+                if (json.has("didyoumeans")) {
+                    if (json["didyoumeans"] is JSONObject) {
+                        val dum = json.getJSONObject("didyoumeans")
+                        +("wolfram|alpha提供的api搜索不到结果, 基于输入值$str, 猜测您" +
+//                        "有${dum.getFloat("score") * 100}%的概率" +
+                                "可能是想查找: ${dum.getString("val")}")
+                        logger.info("> $dum")
+                    } else if (json["didyoumeans"] is JSONArray) {
+                        val dums = json.getJSONArray("didyoumeans")
+                        +("wolfram|alpha提供的api搜索不到结果, 基于输入值$str, 猜测您" +
+//                        "有${dum.getFloat("score") * 100}%的概率" +
+                                "可能是想查找: \n")
+                        dums.foreachIndexed { it, index ->
+                            +("${index + 1}. " + it.get("val") + "\n")
+                        }
+                        logger.info("> $dums")
+                    } else  {
+                        // re
+                        +json["didyoumeans"].toString()
+                    }
                 }
-            } else if (json["error"] is JSONArray) {
-                json.getJSONArray("error").foreach {
-                    msg += it.toString() + "\n"
+
+                if (json.has("tips")) {
+                    val tips = json.getJSONObject("tips").getString("text")
+                    +tips
+                    logger.info("> $tips")
+                }
+
+                if (json.has("languagemsg")) {
+                    if (json["languagemsg"] is JSONObject) {
+                        for (i in json.getJSONObject("languagemsg").keys()) {
+                            +json.getJSONObject("languagemsg").get(i).toString()
+                        }
+                    } else {
+                        +json["languagemsg"].toString()
+                    }
                 }
             } else {
-                msg += "error: " + json["error"].toString()
+                if (json["error"] is JSONObject) {
+                    for (i in json.getJSONObject("error").keys()) {
+                        val errmsg = json.getJSONObject("error").get(i)
+                        +"$i: $errmsg; \n"
+                    }
+                    logger.error(json["error"].toString())
+                } else if (json["error"] is JSONArray) {
+                    json.getJSONArray("error").foreach {
+                        +(it.toString() + "\n")
+                    }
+                    logger.error(json["error"].toString())
+                } else {
+                    +("error: " + json["error"].toString())
+                    logger.error(json["error"].toString())
+                }
+
+                logger.info("# error")
             }
 
-            logger.info("# error")
+            if (isEmpty()) {
+                +errorMsg.replace("{{json}}", json.toString())
+            } else {
+                // wolframalpha给出的中国地图是错误的
+                if (str == "中国" || str == "中华人民共和国" ||
+                    str == "台湾" || str == "台北" ||
+                    str == "中国台湾" || str == "中国台北" ||
+                    str == "藏南" || str == "zangnan" ||
+                    str.equals("China", true) ||
+                    str.equals("the People's Republic of China", true) ||
+                    str.equals("PRC", true) ||
+                    str.equals("taiwan", true) ||
+                    str.equals("taipei", true) ||
+                    str.equals("chinese taipei", true) ||
+                    str.equals("taipei city", true) ||
+                    str.equals("People's Republic of China", true)
+                ) +"\n注: 以上的地图是错误的, 台湾和藏南是中国领土的一部分"
+            }
         }
-
-        return if (msg.isEmpty()) {
-            msg + PlainText(errorMsg.replace("{{json}}", json.toString()))
-        } else {
-            // wolframalpha给出的中国地图是错误的
-            if (str == "中国" || str == "中华人民共和国" ||
-                str == "台湾" || str == "台北" ||
-                str == "中国台湾" || str == "中国台北" ||
-                str == "藏南" || str == "zangnan" ||
-                str.equals("China", true) ||
-                str.equals("the People's Republic of China", true) ||
-                str.equals("PRC", true) ||
-                str.equals("taiwan", true) ||
-                str.equals("taipei", true) ||
-                str.equals("chinese taipei", true) ||
-                str.equals("taipei city", true) ||
-                str.equals("People's Republic of China", true)
-            ) msg + "\n注: 以上的地图是错误的, 台湾和藏南是中国领土的一部分" else msg
-        }
-    }
-
-    /**
-     * httpGet请求
-     * @param url 链接
-     * @return 返回的字符串
-     */
-    private fun doGet(url: String) : String {
-        val url = URL(url)
-        val con = url.openConnection()
-        val req = con as HttpURLConnection
-        req.requestMethod = "GET"
-        req.setRequestProperty("Content-Type", "application/json; utf-8")
-        req.setRequestProperty("Accept", "application/json")
-        req.connect()
-        return InputStreamReader(req.inputStream, StandardCharsets.UTF_8).readText()
     }
 }
 
-suspend fun JSONArray.foreach(action: suspend (JSONObject) -> Unit) {
+inline fun JSONArray.foreach(action: (JSONObject) -> Unit) {
     for (i in 0 until this.length()) {
         action(this[i] as JSONObject)
     }
 }
 
-suspend fun JSONArray.foreachi(action: suspend (JSONObject, Int) -> Unit) {
+inline fun JSONArray.foreachIndexed(action: (JSONObject, Int) -> Unit) {
     for (i in 0 until this.length()) {
         action(this[i] as JSONObject, i)
     }
 }
 
 object Config : AutoSavePluginConfig("config") {
+    @ValueDescription("wolfram|alpha 的 appid, 前往 $appIDSite 获得")
     val appid: String by value()
+    @ValueDescription("触发前缀, 为空时是两个单引号")
     val prefix: String by value()
+    @ValueDescription("当发生错误时的提示信息")
     val error_msg: String by value()
+    @ValueDescription("图片与文本的分割线, 为空时是 ---------, 填 empty 时为空白字符")
     val separation_line: String by value()
+    @ValueDescription("是否构建转发消息")
+    val isForward by value(false)
 }

@@ -1,12 +1,8 @@
 // 测试
 
-import net.mamoe.mirai.message.data.PlainText
-import net.mamoe.mirai.utils.ExternalResource.Companion.uploadAsImage
+import bot.query.wolframalpha.whiter.foreach
 import org.json.JSONArray
 import org.json.JSONObject
-import whiter.bot.Wolframalpha
-import whiter.bot.foreach
-import whiter.bot.foreachi
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -19,7 +15,7 @@ import java.nio.channels.ReadableByteChannel
 import java.nio.charset.StandardCharsets
 
 
-suspend fun main(args: Array<String>) {
+suspend fun main() {
     val appid = File("testappid").readText()
     var query = "population%20of%20france"
     query = "lim\\frac{sinx}{x}"
@@ -85,7 +81,7 @@ fun maina(args: Array<String>) {
 
             println("---")
         }
-    } else if (json.getBoolean("error") == false) {
+    } else if (!json.getBoolean("error")) {
 
         if (json.has("didyoumeans")) {
             val dum = json.getJSONObject("didyoumeans")
