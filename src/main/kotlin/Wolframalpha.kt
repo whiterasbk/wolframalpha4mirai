@@ -3,8 +3,15 @@ package bot.query.wolframalpha.whiter
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.utils.io.jvm.javaio.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import net.mamoe.mirai.Mirai
+import net.mamoe.mirai.console.command.*
+import net.mamoe.mirai.console.command.CommandSender
 import net.mamoe.mirai.console.data.AutoSavePluginConfig
 import net.mamoe.mirai.console.data.ValueDescription
 import net.mamoe.mirai.console.data.value
@@ -22,21 +29,29 @@ import net.mamoe.mirai.utils.info
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.InputStream
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 import java.net.URLEncoder
+import java.nio.charset.Charset
+import kotlin.math.log
 
 const val appIDSite = "https://developer.wolframalpha.com/portal/myapps/index.html"
 
 object Wolframalpha : KotlinPlugin(
     JvmPluginDescription(
         id = "bot.query.wolframalpha.whiter",
-        version = "1.4"
+        version = "1.5"
     )
 ) {
     private lateinit var appid: String
     lateinit var errorMsg: String
     private lateinit var slice: String
     private lateinit var separationLine: String
-    private val client = HttpClient(OkHttp)
+    private val client by lazy {
+        HttpClient(OkHttp)
+    }
+    private var requestByCustom = false
 
     override fun onEnable() {
         logger.info { "WolframAlpha Plugin loaded" }
@@ -52,6 +67,27 @@ object Wolframalpha : KotlinPlugin(
             "empty" -> ""
             else -> Config.separation_line
         }
+
+        CommandManager.registerCommand(object : SimpleCommand(this, "wolfram", description = "发送 wolfram 查询") {
+            @Handler
+            suspend fun CommandSender.onCommand(message: String) {
+                sendMessage(query(message, subject))
+            }
+        })
+
+        requestByCustom = runCatching {
+            runBlocking {
+                logger.info("checking available")
+                client.get<HttpResponse>("https://www.wolframalpha.com/")
+            }
+        }.apply {
+            onFailure {
+                logger.error(it)
+                logger.error("client is not available, use default instead.")
+            }
+        }.isFailure
+
+        logger.info { "isClientFailToInit: $requestByCustom" }
 
         val be = globalEventChannel().filter { it is BotEvent }
 
@@ -80,20 +116,36 @@ object Wolframalpha : KotlinPlugin(
     }
 
     /**
+     * httpGet请求
+     * @param url 链接
+     * @return 返回的字符串
+     */
+    private fun doGetWithStream(url: String): InputStream = (URL(url).openConnection() as HttpURLConnection).apply {
+        requestMethod = "GET"
+        setRequestProperty("Content-Type", "application/json; utf-8")
+        setRequestProperty("Accept", "application/json")
+        connect()
+    }.inputStream
+
+    private fun doGet(url: String) = InputStreamReader(doGetWithStream(url), Charset.defaultCharset()).readText()
+
+    /**
      * 进行wolfram|α查询
      * @param str 查询字符串
      * @param subject 发送对象
      * @param needSeparationLine 是否需要分割线
      * @return 消息链，总是返回非空消息
      */
-    suspend fun query(str: String, subject: Contact, needSeparationLine: Boolean = true): MessageChain {
+    suspend fun query(str: String, subject: Contact?, needSeparationLine: Boolean = true): MessageChain {
         val enterLine = if (needSeparationLine) "\n" else ""
         val query = withContext(Dispatchers.IO) {
             URLEncoder.encode(str, "utf-8")
         }
 
         val url = "https://api.wolframalpha.com/v2/query?appid=$appid&input=$query&output=json"
-        val json = JSONObject(client.get<String>(url)).getJSONObject("queryresult")
+        val json = JSONObject(if (requestByCustom) doGet(url) else
+            client.get<String>(url)//.bodyAsText()
+        ).getJSONObject("queryresult")
         var c = 0
 
         return buildMessageChain {
@@ -109,10 +161,14 @@ object Wolframalpha : KotlinPlugin(
                         for (i in 0 until it["numsubpods"] as Int) {
                             val item = it.getJSONArray("subpods").getJSONObject(i)
                             val imgSrc = item.getJSONObject("img").getString("src")
-                            val openStream = client.get<InputStream>(imgSrc) // URL(img_src).openStream()
-                            +openStream.uploadAsImage(subject)
+                            subject?.let { sub ->
+                                +(if (requestByCustom) URL(imgSrc).openStream() else client.get(imgSrc)/*.bodyAsChannel().toInputStream()*/).use { stream ->
+                                    stream.uploadAsImage(sub)
+                                }
+                            } ?: run {
+                                +imgSrc
+                            }
                             logger.info("![]($imgSrc)")
-                            openStream.close()
                         }
                     }
 
@@ -181,6 +237,7 @@ object Wolframalpha : KotlinPlugin(
             }
 
             if (isEmpty()) {
+                logger.error("message is empty! source: $json")
                 +errorMsg.replace("{{json}}", json.toString())
             } else {
                 // wolframalpha给出的中国地图是错误的
