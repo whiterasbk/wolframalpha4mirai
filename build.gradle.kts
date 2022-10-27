@@ -14,7 +14,5 @@ repositories {
 }
 
 dependencies {
-    api("org.json:json:20220320")
-//    api("io.ktor:ktor-client-core:2.1.0")
-//    api("io.ktor:ktor-client-okhttp:2.1.0")
+    api("org.json:json:20220924")
 }

@@ -32,16 +32,5 @@ isForward: true
  [<img src="https://s4.ax1x.com/2022/01/14/71ZvkV.png" alt="71ZvkV.png" style="zoom: 54%;" />](https://imgtu.com/i/71ZvkV) [<img src="https://s4.ax1x.com/2022/01/14/71ZxYT.png" alt="71ZxYT.png" style="zoom: 67%;" />](https://imgtu.com/i/71ZxYT)
 
 ### 注意事项
- * 由于 wolframalpha 不支持非英文(但好像支持日文), 所以当输入消息中含有非英文字符时可能会导致未知错误
- * 若出现类似如下报错
-```text
-E/bot.query.wolframalpha.whiter: Exception in coroutine Plugin whiter.bot.wolframalpha of whiter.bot.wolframalpha
-    java.lang.NoClassDefFoundError: org/json/JSONObject
-    at bot.query.wolframalpha.whiter.Wolframalpha.query(Wolframalpha.kt:57)
-```
-为缺少 `org.json` 包导致的找不到类的错误
-
-可以在 `plugin-shared-libraries/libraries.txt` 追加以下内容解决
-```text
-org.json:json:20220320
-```
+ * 由于 wolframalpha 不支持非英文, 所以当输入消息中含有非英文字符时可能会导致未知错误
+ 
