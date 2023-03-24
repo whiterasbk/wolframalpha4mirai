@@ -25,7 +25,7 @@ separation_line: ''
 # 是否构建转发消息
 isForward: true
 ```
-5. 启动 mirai
+5. 启动 mirai 或者用 `/wolfram-reload` 重载配置
 
 ### 效果
 

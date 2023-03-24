@@ -49,8 +49,7 @@ object Wolframalpha : KotlinPlugin(
     }
     private var requestByCustom = false
 
-    override fun onEnable() {
-        logger.info { "WolframAlpha Plugin loaded" }
+    private fun loadConfig() {
         Config.reload()
         appid = Config.appid
         if (appid.isEmpty()) throw Exception("your appid can not be empty! " +
@@ -63,11 +62,23 @@ object Wolframalpha : KotlinPlugin(
             "empty" -> ""
             else -> Config.separation_line
         }
+    }
+
+    override fun onEnable() {
+        logger.info { "WolframAlpha Plugin loaded" }
+        loadConfig()
 
         CommandManager.registerCommand(object : SimpleCommand(this, "wolfram", description = "发送 wolfram 查询") {
             @Handler
             suspend fun CommandSender.onCommand(message: String) {
                 sendMessage(query(message, subject))
+            }
+        })
+        CommandManager.registerCommand(object : SimpleCommand(this, "wolfram-reload", description = "重载 wolfram 配置") {
+            @Handler
+            suspend fun CommandSender.onCommand() {
+                loadConfig()
+                sendMessage("OK")
             }
         })
 
