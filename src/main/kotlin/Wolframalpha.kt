@@ -6,12 +6,9 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.utils.io.jvm.javaio.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import net.mamoe.mirai.Mirai
 import net.mamoe.mirai.console.command.*
-import net.mamoe.mirai.console.command.CommandSender
 import net.mamoe.mirai.console.data.AutoSavePluginConfig
 import net.mamoe.mirai.console.data.ValueDescription
 import net.mamoe.mirai.console.data.value
@@ -34,7 +31,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 import java.nio.charset.Charset
-import kotlin.math.log
 
 const val appIDSite = "https://developer.wolframalpha.com/portal/myapps/index.html"
 
@@ -53,8 +49,7 @@ object Wolframalpha : KotlinPlugin(
     }
     private var requestByCustom = false
 
-    override fun onEnable() {
-        logger.info { "WolframAlpha Plugin loaded" }
+    private fun loadConfig() {
         Config.reload()
         appid = Config.appid
         if (appid.isEmpty()) throw Exception("your appid can not be empty! " +
@@ -67,6 +62,11 @@ object Wolframalpha : KotlinPlugin(
             "empty" -> ""
             else -> Config.separation_line
         }
+    }
+
+    override fun onEnable() {
+        logger.info { "WolframAlpha Plugin loaded" }
+        loadConfig()
 
         CommandManager.registerCommand(object : SimpleCommand(this, "wolfram", description = "发送 wolfram 查询") {
             @Handler
@@ -74,11 +74,18 @@ object Wolframalpha : KotlinPlugin(
                 sendMessage(query(message, subject))
             }
         })
+        CommandManager.registerCommand(object : SimpleCommand(this, "wolfram-reload", description = "重载 wolfram 配置") {
+            @Handler
+            suspend fun CommandSender.onCommand() {
+                loadConfig()
+                sendMessage("OK")
+            }
+        })
 
         requestByCustom = runCatching {
             runBlocking {
                 logger.info("checking available")
-                client.get<HttpResponse>("https://www.wolframalpha.com/")
+                client.get("https://www.wolframalpha.com/")
             }
         }.apply {
             onFailure {
@@ -144,7 +151,7 @@ object Wolframalpha : KotlinPlugin(
 
         val url = "https://api.wolframalpha.com/v2/query?appid=$appid&input=$query&output=json"
         val json = JSONObject(if (requestByCustom) doGet(url) else
-            client.get<String>(url)//.bodyAsText()
+            client.get(url).bodyAsText()
         ).getJSONObject("queryresult")
         var c = 0
 
@@ -162,7 +169,7 @@ object Wolframalpha : KotlinPlugin(
                             val item = it.getJSONArray("subpods").getJSONObject(i)
                             val imgSrc = item.getJSONObject("img").getString("src")
                             subject?.let { sub ->
-                                +(if (requestByCustom) URL(imgSrc).openStream() else client.get(imgSrc)/*.bodyAsChannel().toInputStream()*/).use { stream ->
+                                +(if (requestByCustom) URL(imgSrc).openStream() else client.get(imgSrc).bodyAsChannel().toInputStream()).use { stream ->
                                     stream.uploadAsImage(sub)
                                 }
                             } ?: run {
